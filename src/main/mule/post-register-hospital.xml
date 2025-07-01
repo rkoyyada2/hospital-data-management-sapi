@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="75858012-b8a5-4d45-80f6-62f3698c2b6f" >
+		<db:generic-connection url="jdbc:postgresql://postgresql-199067-0.cloudclusters.net:10084/pip" driverClassName="org.postgresql.Driver" user="Raghav" password="Database@123"/>
+	</db:config>
+	<sub-flow name="post-register-hospitalSub_Flow" doc:id="dc06aff6-8882-40ad-be49-ad5a527236bd" >
+		<logger level="INFO" doc:name="Logger" doc:id="74cbab5b-1906-4c35-abcb-9d722731b18e" />
+		<ee:transform doc:name="Transform Message" doc:id="4351d6ef-eda1-41f9-969b-7bcbb002acf4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"hospitalName": payload.hospitalName,
+"area": payload.area,
+"city": payload.city,
+"state": payload.state,
+"country": payload.country,
+"pin": payload.pin,
+"regDate":now() as DateTime {format: "yyyy-MM-dd"},
+"deRegDate":null,
+"capacity":payload.capacity 
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:insert doc:name="Insert" doc:id="c3e408ce-9f2e-4fc0-992f-d47c75f6dcca" config-ref="Database_Config">
+			<db:sql ><![CDATA[insert]]></db:sql>
+			<db:input-parameters ><![CDATA[payload]]></db:input-parameters>
+		</db:insert>
+		<logger level="INFO" doc:name="Logger" doc:id="7bb7e8b3-acad-4802-906b-26167be390bd" />
+	</sub-flow>
+</mule>
