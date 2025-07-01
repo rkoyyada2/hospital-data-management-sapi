@@ -6,7 +6,7 @@
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
 	<sub-flow name="delete-deregister-hospitalSub_Flow" doc:id="07bd0fb4-1623-4071-9fbc-d320720e7ae0" >
 		<logger level="INFO" doc:name="Logger" doc:id="0d66b4f8-3ef8-45e5-aacf-97ee568f0c62" />
-		<db:delete doc:name="Delete" doc:id="ea5e588d-27e4-47bb-a33a-da9f57ed479a" />
+		<!-- [STUDIO:"Delete"]<db:delete doc:name="Delete" doc:id="ea5e588d-27e4-47bb-a33a-da9f57ed479a" /> [STUDIO] -->
 		<logger level="INFO" doc:name="Logger" doc:id="b492e632-52a0-4a68-a7af-b10f7ba72171" />
 	</sub-flow>
 </mule>
